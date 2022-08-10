@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Menuitems</h1>
+
+<div class="mb-2 text-end">
+     <%= link_to "New menuitem", new_menuitem_path, class: 'btn btn-primary' %>
+</div>
+
+<div class="card-body nested"
+     data-controller="dragger"
+     data-dragger-url="/menuitems/:id/move">
+  <%= nested_items(@menuitems.arrange(:order => :position)) %>
+</div>
+
+

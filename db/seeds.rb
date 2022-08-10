@@ -1,0 +1,1 @@
+1000.times { |n| Menuitem.create!(name: "Menu title number #{n}") }

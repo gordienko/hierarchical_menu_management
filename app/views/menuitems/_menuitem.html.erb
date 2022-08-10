@@ -1,0 +1,22 @@
+<div class="menuitem">
+  <div class="row">
+    <div class="col-5 menitem-name">
+      <i class="bi bi-grip-vertical"></i><%= menuitem.to_s %>
+    </div>
+    <div class="col-4 actions">
+      <a class='subtle' href="<%= menuitem.the_link %>" target="_blank"><%= menuitem.the_link %></a>
+    </div>
+    <div class="col-2 actions">
+      <% if menuitem.menuitemable %>
+        <%= link_to "#{menuitem.menuitemable.class.to_s.downcase}:#{menuitem.menuitemable.title}", edit_polymorphic_path( menuitem.menuitemable), class: 'subtle' %>
+      <% end %>
+    </div>
+    <div class="col-1 text-right actions">
+      <%= link_to "<i class='bi-pencil'></i>".html_safe, edit_menuitem_path(menuitem.id) %>
+      <%= link_to "<i class='bi-trash'></i>".html_safe, menuitem_path(menuitem.id), data: {
+        turbo_method: :delete,
+        turbo_confirm: "Deletes any sub items. Are you sure?"
+      } %>
+    </div>
+  </div>
+</div>

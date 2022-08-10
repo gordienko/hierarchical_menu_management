@@ -1,0 +1,27 @@
+<%= form_with(model: menuitem) do |form| %>
+  <% if menuitem.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(menuitem.errors.count, "error") %> prohibited this menuitem from being saved:</h2>
+
+      <ul>
+        <% menuitem.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :ancestry, style: "display: block" %>
+    <%= form.select :ancestry, Menuitem.all.collect { |m| [m.name, m.id] }, :prompt => 'Select' %>
+  </div>
+
+  <div>
+    <%= form.submit class: 'btn btn-primary mt-2' %>
+  </div>
+<% end %>
