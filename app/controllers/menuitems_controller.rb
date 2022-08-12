@@ -60,22 +60,28 @@ class MenuitemsController < ApplicationController
   def move
     @menuitem = Menuitem.find(params[:id])
     if params[:ancestry] == 'undefined'
-      @menuitem.update_columns(ancestry:  nil)
+      @menuitem.update_columns(ancestry: nil)
     else
-      @menuitem.update_columns(ancestry:  params[:ancestry])
+      @menuitem.update_columns(ancestry: params[:ancestry])
     end
+
+    @menuitem.siblings.order(:position).each.with_index(1) do |item, index|
+      item.update_column(:position, index)
+    end
+
     @menuitem.insert_at(params[:position].to_i)
     head :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_menuitem
-      @menuitem = Menuitem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def menuitem_params
-      params.require(:menuitem).permit(:name, :ancestry).transform_values { |value| value == '' ? nil : value }
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_menuitem
+    @menuitem = Menuitem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def menuitem_params
+    params.require(:menuitem).permit(:name, :ancestry).transform_values { |value| value == '' ? nil : value }
+  end
 end
