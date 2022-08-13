@@ -59,16 +59,7 @@ class MenuitemsController < ApplicationController
 
   def move
     @menuitem = Menuitem.find(params[:id])
-    if params[:ancestry] == 'undefined'
-      @menuitem.update_columns(ancestry: nil)
-    else
-      @menuitem.update_columns(ancestry: params[:ancestry])
-    end
-
-    @menuitem.siblings.order(:position).each.with_index(1) do |item, index|
-      item.update_column(:position, index)
-    end
-
+    @menuitem.update(parent_id: params[:ancestry] == 'undefined' ? nil : params[:ancestry])
     @menuitem.insert_at(params[:position].to_i)
     head :ok
   end
