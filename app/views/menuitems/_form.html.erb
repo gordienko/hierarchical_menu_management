@@ -17,8 +17,8 @@
   </div>
 
   <div>
-    <%= form.label :ancestry, style: "display: block" %>
-    <%= form.select :ancestry, Menuitem.all.collect { |m| [m.name, m.id] }, :prompt => 'Select' %>
+    <%= form.label :parent_id, style: "display: block" %>
+    <%= form.select :parent_id, Menuitem.all.collect { |m| [m.name, m.id] }, :prompt => 'Select' %>
   </div>
 
   <div>
